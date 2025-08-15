@@ -1,0 +1,460 @@
+/* === PANEL DE TEXTO AAA GAMING === */
+
+.textContainer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 160px; /* Más espacio para claridad */
+  
+  /* Glassmorphism AAA */
+  background: 
+    linear-gradient(135deg, 
+      rgba(5, 15, 25, 0.98) 0%, 
+      rgba(15, 25, 35, 0.96) 50%, 
+      rgba(10, 20, 30, 0.98) 100%),
+    radial-gradient(circle at 30% 0%, rgba(34, 197, 94, 0.1), transparent 70%),
+    radial-gradient(circle at 70% 0%, rgba(59, 130, 246, 0.05), transparent 60%);
+  
+  backdrop-filter: blur(25px) saturate(1.5);
+  border-top: 3px solid transparent;
+  border-radius: 25px 25px 0 0;
+  
+  /* Sombras y efectos premium */
+  box-shadow: 
+    0 -12px 40px rgba(0, 0, 0, 0.5),
+    inset 0 3px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(34, 197, 94, 0.4),
+    0 0 60px rgba(34, 197, 94, 0.2);
+  
+  z-index: 15;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  
+  /* Ocultar barra de scroll */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  
+  /* Borde animado */
+  position: relative;
+}
+
+/* Borde superior gaming animado */
+.textContainer::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    #22c55e 0%, 
+    #3b82f6 25%, 
+    #06b6d4 50%, 
+    #8b5cf6 75%, 
+    #22c55e 100%);
+  border-radius: 25px 25px 0 0;
+  animation: textBorderFlow 4s ease-in-out infinite;
+}
+
+.textContainer::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* === TIPOGRAFÍA AAA GAMING === */
+.text {
+  /* Fuente gaming profesional */
+  font-family: 'SF Pro Display', 'Segoe UI', 'Inter', 'Roboto', system-ui, sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+  padding: 40px 50px;
+  display: flex;
+  align-items: center;
+  min-width: 100%;
+  height: 100%;
+  
+  /* Colores y efectos premium */
+  color: #ffffff;
+  text-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.8),
+    0 0 20px rgba(34, 197, 94, 0.3),
+    0 0 40px rgba(34, 197, 94, 0.1);
+  letter-spacing: 1px;
+  
+  /* Efectos de profundidad */
+  filter: contrast(1.1) brightness(1.05);
+}
+
+/* === CARACTERES AAA GAMING === */
+.character {
+  padding: 6px 4px;
+  border-radius: 8px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  margin: 0 2px;
+  font-weight: 700;
+  backdrop-filter: blur(5px);
+}
+
+/* Estados premium con efectos visuales */
+.pending {
+  color: #e2e8f0;
+  background: rgba(15, 23, 42, 0.3);
+  transition: all 0.3s ease;
+  text-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.6),
+    0 0 8px rgba(226, 232, 240, 0.2);
+  border: 1px solid rgba(226, 232, 240, 0.1);
+}
+
+.correct {
+  color: #00ff88;
+  background: 
+    linear-gradient(135deg, rgba(34, 197, 94, 0.4), rgba(16, 185, 129, 0.5)),
+    radial-gradient(circle, rgba(34, 197, 94, 0.2), transparent);
+  border: 2px solid rgba(34, 197, 94, 0.6);
+  box-shadow: 
+    0 0 12px rgba(34, 197, 94, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  text-shadow: 
+    0 0 10px rgba(34, 197, 94, 0.8),
+    0 2px 4px rgba(0, 0, 0, 0.5);
+  transform: scale(1.08);
+  animation: correctPulseAAA 0.5s ease-out;
+}
+
+.error {
+  color: #ff4757;
+  background: 
+    linear-gradient(135deg, rgba(239, 68, 68, 0.5), rgba(220, 38, 38, 0.6)),
+    radial-gradient(circle, rgba(239, 68, 68, 0.3), transparent);
+  border: 2px solid rgba(239, 68, 68, 0.8);
+  box-shadow: 
+    0 0 15px rgba(239, 68, 68, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  text-shadow: 
+    0 0 12px rgba(239, 68, 68, 0.9),
+    0 2px 4px rgba(0, 0, 0, 0.6);
+  animation: errorShakeAAA 0.6s ease-in-out;
+}
+
+.corrected {
+  color: #4dabf7;
+  background: 
+    linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(37, 99, 235, 0.5)),
+    radial-gradient(circle, rgba(59, 130, 246, 0.2), transparent);
+  border: 2px solid rgba(59, 130, 246, 0.7);
+  box-shadow: 
+    0 0 12px rgba(59, 130, 246, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  text-shadow: 
+    0 0 10px rgba(59, 130, 246, 0.8),
+    0 2px 4px rgba(0, 0, 0, 0.5);
+  animation: correctedGlowAAA 0.6s ease-out;
+}
+
+/* Cursor AAA gaming con efectos premium */
+.current {
+  position: relative;
+  z-index: 2;
+  color: #ffffff;
+  background: 
+    linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(37, 99, 235, 0.4)),
+    radial-gradient(circle, rgba(59, 130, 246, 0.1), transparent);
+  border: 2px solid rgba(59, 130, 246, 0.7);
+  box-shadow: 
+    0 0 15px rgba(59, 130, 246, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  text-shadow: 
+    0 0 10px rgba(255, 255, 255, 0.8),
+    0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.current::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -6px;
+  width: 4px;
+  height: calc(100% + 4px);
+  background: 
+    linear-gradient(180deg, 
+      #00d4ff 0%, 
+      #0099ff 50%, 
+      #0066ff 100%);
+  animation: cursorBlinkAAA 1.2s ease-in-out infinite;
+  border-radius: 3px;
+  box-shadow: 
+    0 0 15px rgba(0, 153, 255, 0.8),
+    0 0 30px rgba(0, 153, 255, 0.4);
+}
+
+/* Palabra actual - resaltado sutil */
+.currentWord {
+  background: rgba(251, 191, 36, 0.1);
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(251, 191, 36, 0.2);
+}
+
+/* Próximos caracteres - indicador visual */
+.upcoming {
+  opacity: 0.7;
+  position: relative;
+}
+
+.upcoming::before {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #60a5fa, transparent);
+  animation: upcomingGlow 2s ease-in-out infinite;
+}
+
+/* Animaciones */
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Animación para caracteres correctos */
+@keyframes correctPulse {
+  0% {
+    transform: scale(1);
+    background: rgba(34, 197, 94, 0.1);
+  }
+  50% {
+    transform: scale(1.1);
+    background: rgba(34, 197, 94, 0.3);
+  }
+  100% {
+    transform: scale(1.05);
+    background: rgba(34, 197, 94, 0.2);
+  }
+}
+
+/* Animación para errores */
+@keyframes errorShake {
+  0%, 100% {
+    transform: translateX(0) scale(1);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-3px) scale(1.05);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(3px) scale(1.05);
+  }
+}
+
+/* Animación para caracteres corregidos */
+@keyframes correctedGlow {
+  0% {
+    background: rgba(239, 68, 68, 0.3);
+    text-shadow: 0 0 8px rgba(239, 68, 68, 0.8);
+  }
+  50% {
+    background: rgba(139, 69, 19, 0.3);
+    text-shadow: 0 0 6px rgba(139, 69, 19, 0.6);
+  }
+  100% {
+    background: rgba(59, 130, 246, 0.2);
+    text-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+  }
+}
+
+/* Animación para próximos caracteres */
+@keyframes upcomingGlow {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Indicador de progreso de scroll */
+.scrollProgress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.scrollProgressBar {
+  height: 100%;
+  background: linear-gradient(90deg, #4ade80, #22c55e, #16a34a);
+  transition: width 0.3s ease;
+  border-radius: 0 3px 3px 0;
+  box-shadow: 
+    0 0 10px rgba(34, 197, 94, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  animation: progressBarGlow 2s ease-in-out infinite;
+}
+
+@keyframes progressBarGlow {
+  0%, 100% {
+    box-shadow: 
+      0 0 10px rgba(34, 197, 94, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow: 
+      0 0 15px rgba(34, 197, 94, 0.8),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+}
+
+/* === ANIMACIONES AAA GAMING === */
+
+/* Borde del panel de texto */
+@keyframes textBorderFlow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Cursor AAA */
+@keyframes cursorBlinkAAA {
+  0%, 100% {
+    opacity: 1;
+    transform: scaleY(1);
+    box-shadow: 
+      0 0 15px rgba(0, 153, 255, 0.8),
+      0 0 30px rgba(0, 153, 255, 0.4);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scaleY(0.95);
+    box-shadow: 
+      0 0 8px rgba(0, 153, 255, 0.4),
+      0 0 15px rgba(0, 153, 255, 0.2);
+  }
+}
+
+/* Efectos para caracteres correctos */
+@keyframes correctPulseAAA {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.5);
+  }
+  50% {
+    transform: scale(1.12);
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.8);
+  }
+  100% {
+    transform: scale(1.08);
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.5);
+  }
+}
+
+/* Efectos para errores */
+@keyframes errorShakeAAA {
+  0%, 100% { 
+    transform: translateX(0) scale(1);
+  }
+  20% { 
+    transform: translateX(-3px) scale(1.02);
+  }
+  40% { 
+    transform: translateX(3px) scale(1.02);
+  }
+  60% { 
+    transform: translateX(-2px) scale(1.01);
+  }
+  80% { 
+    transform: translateX(2px) scale(1.01);
+  }
+}
+
+/* Efectos para correcciones */
+@keyframes correctedGlowAAA {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
+  }
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .textContainer {
+    bottom: 60px;
+    height: 100px;
+  }
+  
+  .text {
+    font-size: 1.1rem;
+    padding: 20px 20px;
+  }
+  
+  .current::after {
+    width: 2px;
+  }
+}
+
+@media (max-width: 480px) {
+  .textContainer {
+    height: 80px;
+  }
+  
+  .text {
+    font-size: 1rem;
+    padding: 15px 15px;
+  }
+  
+  .current::after {
+    width: 2px;
+    box-shadow: 0 0 5px rgba(251, 191, 36, 0.4);
+  }
+}
+
+/* Optimización de rendimiento */
+.character,
+.current::after,
+.upcoming::before,
+.scrollProgressBar {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* Reducir movimiento para accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  .textContainer {
+    scroll-behavior: auto;
+  }
+  
+  .character,
+  .current::after,
+  .upcoming::before,
+  .scrollProgressBar {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  
+  .current::after {
+    animation: none;
+    opacity: 1;
+  }
+}

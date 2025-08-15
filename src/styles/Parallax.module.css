@@ -1,0 +1,1320 @@
+/* Sistema de Parallax para Typing Frog */
+
+.parallaxContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* === VARIACIONES DE HORA DEL DÍA - Estilo ilustración === */
+.morning {
+  --sky-start: #ffd6a5;
+  --sky-middle: #ffb347;
+  --sky-end: #a8e6cf;
+  --water-start: #7fcdcd;
+  --water-end: #95e1d3;
+  --tree-color: #4a7c59;
+  --tree-accent: #6ab04c;
+  --atmosphere: rgba(255, 230, 180, 0.3);
+}
+
+.afternoon {
+  --sky-start: #ff9a56;
+  --sky-middle: #feca57;
+  --sky-end: #48dbfb;
+  --water-start: #0abde3;
+  --water-end: #54a0ff;
+  --tree-color: #2d5016;
+  --tree-accent: #4a7c59;
+  --atmosphere: rgba(255, 200, 100, 0.2);
+}
+
+.night {
+  --sky-start: #2c2c54;
+  --sky-middle: #40407a;
+  --sky-end: #706fd3;
+  --water-start: #2f3542;
+  --water-end: #57606f;
+  --tree-color: #1e3a8a;
+  --tree-accent: #3b82f6;
+  --atmosphere: rgba(100, 100, 150, 0.4);
+}
+
+/* === CAPA 1: CIELO === */
+.skyLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70%;
+  z-index: 1;
+}
+
+.sky {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    var(--sky-start) 0%,
+    var(--sky-middle) 50%,
+    var(--sky-end) 100%
+  );
+  position: relative;
+}
+
+.sky::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--atmosphere);
+  pointer-events: none;
+}
+
+/* Cuerpos celestiales - CSS puro */
+.celestialBody {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  z-index: 2;
+  border-radius: 50%;
+}
+
+.sun.morning {
+  top: 20%;
+  right: 25%;
+  background: radial-gradient(circle at 30% 30%, #ffd700, #ff8c00, #ff6b35);
+  box-shadow: 
+    0 0 40px rgba(255, 215, 0, 0.8),
+    0 0 80px rgba(255, 140, 0, 0.6),
+    inset -10px -10px 0 rgba(255, 140, 0, 0.3);
+  animation: sunrisGlow 4s ease-in-out infinite;
+}
+
+.sun.afternoon {
+  top: 10%;
+  right: 15%;
+  background: radial-gradient(circle at 30% 30%, #ffd700, #ff8c00);
+  box-shadow: 
+    0 0 50px rgba(255, 215, 0, 0.9),
+    0 0 100px rgba(255, 140, 0, 0.7),
+    inset -8px -8px 0 rgba(255, 140, 0, 0.2);
+  animation: sunGlow 3s ease-in-out infinite;
+}
+
+.moon {
+  top: 15%;
+  right: 20%;
+  background: radial-gradient(circle at 30% 30%, #f8f8ff, #dcdcdc, #c0c0c0);
+  box-shadow: 
+    0 0 30px rgba(248, 248, 255, 0.6),
+    0 0 60px rgba(220, 220, 220, 0.4),
+    inset -12px -12px 0 rgba(192, 192, 192, 0.3);
+  animation: moonGlow 5s ease-in-out infinite;
+}
+
+/* Cráteres de la luna */
+.moon::before {
+  content: '';
+  position: absolute;
+  top: 25%;
+  left: 40%;
+  width: 12px;
+  height: 12px;
+  background: rgba(160, 160, 160, 0.4);
+  border-radius: 50%;
+}
+
+.moon::after {
+  content: '';
+  position: absolute;
+  top: 60%;
+  left: 20%;
+  width: 8px;
+  height: 8px;
+  background: rgba(160, 160, 160, 0.3);
+  border-radius: 50%;
+}
+
+/* Estrellas */
+.stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.star {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, #ffffff, #f0f8ff);
+  border-radius: 50%;
+  animation: starTwinkle 2s ease-in-out infinite;
+  box-shadow: 
+    0 0 6px rgba(255, 255, 255, 0.8),
+    0 0 12px rgba(240, 248, 255, 0.6);
+}
+
+.star1 { animation-duration: 2s; }
+.star2 { animation-duration: 2.5s; }
+.star3 { animation-duration: 3s; }
+.star4 { animation-duration: 2.2s; }
+.star5 { animation-duration: 2.8s; }
+
+/* === CAPA 2: NUBES === */
+.cloudsDistant,
+.cloudsNear {
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.cloudsDistant {
+  top: 0;
+  z-index: 3;
+}
+
+.cloudsNear {
+  top: 0;
+  z-index: 7;
+}
+
+.cloud {
+  position: absolute;
+  width: 80px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 40px;
+  animation: cloudFloat 20s ease-in-out infinite; /* Nubes más lentas */
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+/* Forma de nube más realista */
+.cloud::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 10px;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+}
+
+.cloud::after {
+  content: '';
+  position: absolute;
+  top: -15px;
+  right: 15px;
+  width: 35px;
+  height: 35px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+}
+
+.cloud.distant {
+  opacity: 0.6;
+  transform: scale(0.7);
+  filter: blur(1px) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
+}
+
+.cloud.near {
+  opacity: 0.95;
+  transform: scale(1.2);
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15));
+}
+
+/* === CAPA 3-4: MONTAÑAS === */
+.mountainsDistant,
+.mountainsNear {
+  position: absolute;
+  width: 200%;
+  height: 40%;
+  top: 30%;
+  pointer-events: none;
+}
+
+.mountainsDistant {
+  z-index: 4;
+  opacity: 0.6;
+}
+
+.mountainsNear {
+  z-index: 5;
+  opacity: 0.8;
+  top: 35%;
+}
+
+.mountainLayer1,
+.mountainLayer2 {
+  display: flex;
+  height: 100%;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+/* Montañas CSS estilizadas */
+.mountainLayer1 span,
+.mountainLayer2 span {
+  display: inline-block;
+  position: relative;
+  margin-right: -10px;
+}
+
+/* Montaña estilo CSS */
+.mountainLayer1 span {
+  width: 0;
+  height: 0;
+  border-left: 40px solid transparent;
+  border-right: 40px solid transparent;
+  border-bottom: 100px solid var(--tree-color);
+  filter: 
+    drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))
+    drop-shadow(-5px 0 0 rgba(0, 0, 0, 0.1));
+  opacity: 0.7;
+}
+
+.mountainLayer2 span {
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 120px solid var(--tree-accent);
+  filter: 
+    drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3))
+    drop-shadow(-8px 0 0 rgba(0, 0, 0, 0.15));
+  opacity: 0.8;
+}
+
+/* Picos de nieve en las montañas */
+.mountainLayer1 span::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: -15px;
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 25px solid rgba(255, 255, 255, 0.8);
+}
+
+.mountainLayer2 span::before {
+  content: '';
+  position: absolute;
+  top: -25px;
+  left: -20px;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 30px solid rgba(255, 255, 255, 0.9);
+}
+
+/* === CAPA 5-7: VEGETACIÓN === */
+.vegetationBack,
+.vegetationFront {
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  pointer-events: none;
+  bottom: 40%; /* suelo de las capas de vegetación a la altura del horizonte */
+}
+
+.vegetationBack {
+  z-index: 6;
+}
+
+.vegetationFront {
+  z-index: 8;
+}
+
+.tree {
+  position: absolute;
+  animation: treeWay 8s ease-in-out infinite;
+  display: flex;
+  flex-direction: column-reverse; /* hojas arriba, tronco abajo */
+  align-items: center;
+  bottom: 0; /* anclado al suelo de su capa */
+}
+
+/* Tronco del árbol - ÁRBOLES GRANDES */
+.tree::before {
+  content: '';
+  width: 20px; /* Mucho más ancho */
+  height: 80px; /* Mucho más alto */
+  background: linear-gradient(45deg, #8b4513, #a0522d);
+  border-radius: 10px 10px 0 0; /* Redondeado arriba, recto abajo para enterrarse */
+  box-shadow: 
+    inset -4px 0 0 rgba(0, 0, 0, 0.2),
+    0 4px 8px rgba(0, 0, 0, 0.3);
+  margin-top: -10px; /* Que se "enterre" en el terreno */
+  z-index: 1;
+}
+
+/* Copa del árbol - ÁRBOLES GRANDES */
+.tree::after {
+  content: '';
+  width: 120px; /* Mucho más grande */
+  height: 120px; /* Mucho más grande */
+  background: radial-gradient(circle at 30% 30%, var(--tree-accent), var(--tree-color));
+  border-radius: 50%;
+  box-shadow: 
+    inset -12px -12px 0 rgba(0, 0, 0, 0.15),
+    0 8px 16px rgba(0, 0, 0, 0.25),
+    0 0 0 3px rgba(255, 255, 255, 0.1);
+  z-index: 2;
+}
+
+.tree.background {
+  transform: scale(1.5); /* Árboles de fondo más grandes */
+  opacity: 0.7;
+}
+
+.tree.background::before {
+  width: 15px;
+  height: 60px;
+}
+
+.tree.background::after {
+  width: 90px;
+  height: 90px;
+}
+
+.tree.foreground {
+  transform: scale(2.0); /* Árboles de frente mucho más grandes */
+  opacity: 0.9;
+}
+
+.tree.foreground::before {
+  width: 25px;
+  height: 100px;
+}
+
+.tree.foreground::after {
+  width: 150px;
+  height: 150px;
+}
+
+/* === CAPA 8: INSECTOS === */
+.insects {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+  pointer-events: none;
+}
+
+.insect {
+  position: absolute;
+  width: 12px;
+  height: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Libélula estilizada */
+.insect::before {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 8px;
+  background: linear-gradient(to bottom, #4a90e2, #2c5aa0);
+  border-radius: 1px;
+  z-index: 2;
+}
+
+/* Alas de la libélula */
+.insect::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 4px;
+  background: 
+    radial-gradient(ellipse at 25% 50%, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(ellipse at 75% 50%, rgba(255, 255, 255, 0.6), transparent);
+  border-radius: 50%;
+  animation: wingsFlutter 0.1s ease-in-out infinite;
+  z-index: 1;
+}
+
+.insect1 {
+  animation: insectFly1 8s ease-in-out infinite;
+  filter: hue-rotate(0deg);
+}
+
+.insect2 {
+  animation: insectFly2 10s ease-in-out infinite;
+  filter: hue-rotate(120deg);
+}
+
+.insect3 {
+  animation: insectFly3 12s ease-in-out infinite;
+  filter: hue-rotate(240deg);
+}
+
+/* Aleteo de alas */
+@keyframes wingsFlutter {
+  0%, 100% {
+    transform: scaleY(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scaleY(0.3);
+    opacity: 0.9;
+  }
+}
+
+/* === CAPA 9: AGUA === */
+.waterLayer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  z-index: 10;
+}
+
+.water {
+  width: 300%; /* Mucho más ancho para continuidad */
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    var(--water-start) 0%,
+    var(--water-end) 100%
+  );
+  position: relative;
+  overflow: hidden;
+  left: -100%; /* Extender hacia la izquierda */
+}
+
+.waterWaves {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+  animation: waterRipples 6s ease-in-out infinite;
+}
+
+/* Nenúfares */
+.lilyPads {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.lilyPad {
+  position: absolute;
+  width: 150px; /* Aumentado para ser más grandes que la rana */
+  height: 150px; /* Aumentado para ser más grandes que la rana */
+  background: radial-gradient(ellipse at 30% 30%, #7dd87f, #4a934a);
+  border-radius: 50% 0% 50% 50%;
+  animation: lilyFloat 4s ease-in-out infinite;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
+  transform-origin: center;
+  z-index: 45; /* Que esté bajo la rana pero visible */
+}
+
+/* Líneas en el nenúfar - ESCALA GRANDE */
+.lilyPad::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 5px; /* Más gruesa para la nueva escala */
+  height: 60%;
+  background: linear-gradient(to bottom, transparent, #2d3748, transparent);
+  border-radius: 2px;
+}
+
+.lilyPad::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 4px; /* Más gruesa para la nueva escala */
+  height: 40%;
+  background: linear-gradient(to bottom, transparent, #2d3748, transparent);
+  border-radius: 2px;
+}
+
+/* Flor de loto en algunos nenúfares */
+.lily1::after,
+.lily3::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle, #ff69b4, #ff1493);
+  border-radius: 50% 0% 50% 50%;
+  animation: flowerBob 3s ease-in-out infinite;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.lily1 { 
+  animation-delay: 0s; 
+  transform: scale(1.1);
+}
+.lily2 { 
+  animation-delay: 1s;
+  transform: scale(0.9);
+}
+.lily3 { 
+  animation-delay: 2s;
+  transform: scale(1.2);
+}
+.lily4 { 
+  animation-delay: 3s;
+  transform: scale(0.8);
+}
+
+/* Peces */
+.fish {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.fishSwimming {
+  position: absolute;
+  width: 20px;
+  height: 12px;
+  opacity: 0.7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Cuerpo del pez */
+.fishSwimming::before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 10px;
+  background: linear-gradient(45deg, #4a90e2, #357abd);
+  border-radius: 50% 0% 50% 50%;
+  z-index: 1;
+}
+
+/* Cola del pez */
+.fishSwimming::after {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-right: 8px solid #357abd;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  z-index: 0;
+}
+
+.fish1 {
+  animation: fishSwim1 8s linear infinite;
+  top: 20%;
+}
+
+.fish2 {
+  animation: fishSwim2 10s linear infinite;
+  top: 40%;
+}
+
+.fish3 {
+  animation: fishSwim3 12s linear infinite;
+  top: 60%;
+}
+
+.fish4 {
+  animation: fishSwim4 14s linear infinite;
+  top: 80%;
+}
+
+/* Reflejos mejorados */
+.waterReflections {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.15) 25%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0.15) 75%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse at 30% 20%,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse at 70% 80%,
+      rgba(255, 255, 255, 0.08) 0%,
+      transparent 60%
+    );
+  animation: waterShimmer 4s ease-in-out infinite;
+  mix-blend-mode: overlay;
+}
+
+/* Animación para flores de loto */
+@keyframes flowerBob {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-2px) rotate(5deg);
+  }
+}
+
+/* === PARTÍCULAS AMBIENTALES === */
+.ambientParticles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 11;
+  pointer-events: none;
+}
+
+/* Rocío matutino - Gotas CSS */
+.dewDrop {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle at 30% 30%, #e0f6ff, #87ceeb);
+  border-radius: 50%;
+  animation: dewFloat 6s ease-in-out infinite;
+  box-shadow: 
+    0 0 3px rgba(135, 206, 235, 0.6),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.dew1 { animation-duration: 6s; }
+.dew2 { animation-duration: 7s; }
+.dew3 { animation-duration: 8s; }
+
+/* Polen de la tarde - Partículas brillantes */
+.pollen {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, #ffd700, #ffed4e);
+  border-radius: 50%;
+  animation: pollenDrift 8s ease-in-out infinite;
+  box-shadow: 
+    0 0 6px rgba(255, 215, 0, 0.8),
+    0 0 12px rgba(255, 237, 78, 0.6);
+}
+
+.pollen1 { animation-duration: 8s; }
+.pollen2 { animation-duration: 10s; }
+
+/* Luciérnagas nocturnas - Luces parpadeantes */
+.firefly {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: radial-gradient(circle, #90ee90, #32cd32);
+  border-radius: 50%;
+  animation: fireflyGlow 3s ease-in-out infinite;
+  box-shadow: 
+    0 0 8px rgba(144, 238, 144, 0.9),
+    0 0 16px rgba(50, 205, 50, 0.7);
+}
+
+.firefly1 { animation-duration: 3s; }
+.firefly2 { animation-duration: 4s; }
+.firefly3 { animation-duration: 5s; }
+
+/* === ANIMACIONES === */
+
+/* Cuerpos celestiales */
+@keyframes sunrisGlow {
+  0%, 100% { 
+    filter: drop-shadow(0 0 20px rgba(255, 200, 100, 0.8));
+    transform: scale(1);
+  }
+  50% { 
+    filter: drop-shadow(0 0 30px rgba(255, 220, 120, 1));
+    transform: scale(1.05);
+  }
+}
+
+@keyframes sunGlow {
+  0%, 100% { 
+    filter: drop-shadow(0 0 25px rgba(255, 150, 0, 0.8));
+    transform: scale(1);
+  }
+  50% { 
+    filter: drop-shadow(0 0 35px rgba(255, 180, 50, 1));
+    transform: scale(1.1);
+  }
+}
+
+@keyframes moonGlow {
+  0%, 100% { 
+    filter: drop-shadow(0 0 20px rgba(200, 200, 255, 0.6));
+    transform: scale(1);
+  }
+  50% { 
+    filter: drop-shadow(0 0 30px rgba(220, 220, 255, 0.8));
+    transform: scale(1.03);
+  }
+}
+
+@keyframes starTwinkle {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% { 
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Nubes */
+@keyframes cloudFloat {
+  0%, 100% { 
+    transform: translateY(0px) translateX(0px);
+  }
+  33% { 
+    transform: translateY(-10px) translateX(20px);
+  }
+  66% { 
+    transform: translateY(-5px) translateX(-10px);
+  }
+}
+
+/* Vegetación */
+@keyframes treeWay {
+  0%, 100% { 
+    transform: rotate(0deg) translateY(0px);
+  }
+  50% { 
+    transform: rotate(1deg) translateY(-2px);
+  }
+}
+
+/* Insectos */
+@keyframes insectFly1 {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(100px, -50px) rotate(90deg); }
+  50% { transform: translate(50px, -100px) rotate(180deg); }
+  75% { transform: translate(-50px, -50px) rotate(270deg); }
+  100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+@keyframes insectFly2 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-80px, 80px) scale(1.2); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes insectFly3 {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(60px, 30px) rotate(120deg); }
+  66% { transform: translate(-30px, 60px) rotate(240deg); }
+  100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+/* Agua */
+@keyframes waterRipples {
+  0%, 100% {
+    background-size: 100% 100%, 100% 100%, 100% 100%;
+    background-position: 0% 0%, 100% 100%, 50% 50%;
+  }
+  33% {
+    background-size: 110% 110%, 90% 90%, 105% 105%;
+    background-position: 10% 10%, 90% 90%, 45% 55%;
+  }
+  66% {
+    background-size: 90% 90%, 110% 110%, 95% 95%;
+    background-position: -5% 5%, 105% 95%, 55% 45%;
+  }
+}
+
+@keyframes waterShimmer {
+  0%, 100% { 
+    transform: translateX(-100%);
+    opacity: 0.3;
+  }
+  50% { 
+    transform: translateX(100%);
+    opacity: 0.6;
+  }
+}
+
+/* Nenúfares */
+@keyframes lilyFloat {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% { 
+    transform: translateY(-8px) rotate(2deg);
+  }
+}
+
+/* Peces */
+@keyframes fishSwim1 {
+  0% { transform: translateX(-100px) scaleX(1); }
+  48% { transform: translateX(calc(100vw + 50px)) scaleX(1); }
+  50% { transform: translateX(calc(100vw + 50px)) scaleX(-1); }
+  98% { transform: translateX(-100px) scaleX(-1); }
+  100% { transform: translateX(-100px) scaleX(1); }
+}
+
+@keyframes fishSwim2 {
+  0% { transform: translateX(calc(100vw + 50px)) scaleX(-1); }
+  48% { transform: translateX(-100px) scaleX(-1); }
+  50% { transform: translateX(-100px) scaleX(1); }
+  98% { transform: translateX(calc(100vw + 50px)) scaleX(1); }
+  100% { transform: translateX(calc(100vw + 50px)) scaleX(-1); }
+}
+
+@keyframes fishSwim3 {
+  0% { transform: translateX(-100px) scaleX(1) translateY(0); }
+  25% { transform: translateX(25vw) scaleX(1) translateY(-10px); }
+  50% { transform: translateX(75vw) scaleX(1) translateY(10px); }
+  75% { transform: translateX(calc(100vw + 50px)) scaleX(1) translateY(-5px); }
+  100% { transform: translateX(-100px) scaleX(1) translateY(0); }
+}
+
+@keyframes fishSwim4 {
+  0% { transform: translateX(calc(100vw + 50px)) scaleX(-1) translateY(0); }
+  25% { transform: translateX(75vw) scaleX(-1) translateY(5px); }
+  50% { transform: translateX(25vw) scaleX(-1) translateY(-10px); }
+  75% { transform: translateX(-100px) scaleX(-1) translateY(8px); }
+  100% { transform: translateX(calc(100vw + 50px)) scaleX(-1) translateY(0); }
+}
+
+/* Partículas ambientales */
+@keyframes dewFloat {
+  0%, 100% { 
+    opacity: 0;
+    transform: translateY(0px) scale(0.5);
+  }
+  50% { 
+    opacity: 0.8;
+    transform: translateY(-20px) scale(1);
+  }
+}
+
+@keyframes pollenDrift {
+  0% { 
+    transform: translateY(100vh) translateX(0px) rotate(0deg);
+    opacity: 0;
+  }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { 
+    transform: translateY(-100px) translateX(50px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes fireflyGlow {
+  0%, 100% { 
+    opacity: 0.3;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 100, 0.5));
+    transform: scale(0.8);
+  }
+  50% { 
+    opacity: 1;
+    filter: drop-shadow(0 0 15px rgba(255, 255, 150, 1));
+    transform: scale(1.2);
+  }
+}
+
+/* === RESPONSIVIDAD === */
+@media (max-width: 768px) {
+  .celestialBody {
+    font-size: 2rem;
+  }
+  
+  .cloud {
+    font-size: 1.5rem;
+  }
+  
+  .cloud.near {
+    font-size: 2rem;
+  }
+  
+  .mountainLayer1,
+  .mountainLayer2 {
+    font-size: 3rem;
+  }
+  
+  .tree.background {
+    font-size: 1.5rem;
+  }
+  
+  .tree.foreground {
+    font-size: 2rem;
+  }
+  
+  .lilyPad {
+    font-size: 1.5rem;
+  }
+  
+  .fishSwimming {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .celestialBody {
+    font-size: 1.5rem;
+  }
+  
+  .mountainLayer1,
+  .mountainLayer2 {
+    font-size: 2.5rem;
+  }
+  
+  .cloud {
+    font-size: 1.2rem;
+  }
+  
+  .tree.background {
+    font-size: 1.2rem;
+  }
+  
+  .tree.foreground {
+    font-size: 1.5rem;
+  }
+}
+
+/* === META VISUAL - LÍNEA DE LLEGADA === */
+.finishLineContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.finishLine {
+  position: absolute;
+  bottom: 0;
+  right: -200px;
+  width: 300px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Banderines de meta */
+.finishFlags {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  z-index: 3;
+}
+
+.finishFlag {
+  width: 40px;
+  height: 30px;
+  background: repeating-linear-gradient(
+    45deg,
+    #000000 0px,
+    #000000 5px,
+    #ffffff 5px,
+    #ffffff 10px
+  );
+  border: 2px solid #333;
+  border-radius: 2px;
+  animation: flagWave 1s ease-in-out infinite alternate;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  position: relative;
+}
+
+/* Asta de la bandera */
+.finishFlag::before {
+  content: '';
+  position: absolute;
+  left: -4px;
+  top: -10px;
+  width: 3px;
+  height: 50px;
+  background: linear-gradient(to bottom, #8b4513, #654321);
+  border-radius: 2px;
+}
+
+.finishFlag:nth-child(even) {
+  animation-delay: 0.3s;
+}
+
+@keyframes flagWave {
+  0% {
+    transform: rotate(-5deg) scale(1);
+  }
+  100% {
+    transform: rotate(5deg) scale(1.1);
+  }
+}
+
+/* Arco de meta */
+.finishArch {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 120px;
+  background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
+  border-radius: 100px 100px 0 0;
+  border: 4px solid #b8860b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 
+    0 0 20px rgba(255, 215, 0, 0.6),
+    inset 0 -10px 0 rgba(0, 0, 0, 0.1);
+  z-index: 2;
+  animation: archPulse 2s ease-in-out infinite;
+}
+
+@keyframes archPulse {
+  0%, 100% {
+    transform: translateX(-50%) scale(1);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  }
+  50% {
+    transform: translateX(-50%) scale(1.05);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+  }
+}
+
+.archText {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #8b4513;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin-bottom: 10px;
+  animation: textGlow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes textGlow {
+  0% {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  100% {
+    text-shadow: 
+      2px 2px 4px rgba(0, 0, 0, 0.3),
+      0 0 10px rgba(255, 255, 255, 0.8);
+  }
+}
+
+/* Efectos de celebración */
+.celebrationEffects {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 60px;
+}
+
+.confetti {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  animation: confettiFall 3s ease-in infinite;
+}
+
+/* Diferentes formas de confeti */
+.confetti:nth-child(4n+1) {
+  background: #ff6b6b;
+  border-radius: 50%;
+}
+
+.confetti:nth-child(4n+2) {
+  background: #4ecdc4;
+  border-radius: 2px;
+}
+
+.confetti:nth-child(4n+3) {
+  background: #45b7d1;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.confetti:nth-child(4n+4) {
+  background: #f9ca24;
+  clip-path: polygon(30% 0%, 0% 50%, 30% 100%, 100% 100%, 70% 50%, 100% 0%);
+}
+
+.confetti:nth-child(1) { left: 10%; animation-delay: 0s; }
+.confetti:nth-child(2) { left: 20%; animation-delay: 0.2s; }
+.confetti:nth-child(3) { left: 30%; animation-delay: 0.4s; }
+.confetti:nth-child(4) { left: 40%; animation-delay: 0.6s; }
+.confetti:nth-child(5) { left: 50%; animation-delay: 0.8s; }
+.confetti:nth-child(6) { left: 60%; animation-delay: 1s; }
+.confetti:nth-child(7) { left: 70%; animation-delay: 1.2s; }
+.confetti:nth-child(8) { left: 80%; animation-delay: 1.4s; }
+.confetti:nth-child(9) { left: 90%; animation-delay: 1.6s; }
+.confetti:nth-child(10) { left: 15%; animation-delay: 1.8s; }
+.confetti:nth-child(11) { left: 35%; animation-delay: 2s; }
+.confetti:nth-child(12) { left: 75%; animation-delay: 2.2s; }
+
+@keyframes confettiFall {
+  0% {
+    opacity: 1;
+    transform: translateY(-20px) rotate(0deg) scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(20px) rotate(180deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(60px) rotate(360deg) scale(0.3);
+  }
+}
+
+/* Plataforma final especial */
+.finalPlatform {
+  position: absolute;
+  bottom: 55%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  animation: finalPlatformFloat 2s ease-in-out infinite;
+  z-index: 1;
+}
+
+/* Nenúfares especiales de la meta */
+.finalPlatform::before {
+  content: '';
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(ellipse at 30% 30%, #7dd87f, #4a934a);
+  border-radius: 50% 0% 50% 50%;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.3));
+  box-shadow: 
+    inset 0 -8px 0 rgba(0, 0, 0, 0.1),
+    0 0 20px rgba(125, 216, 127, 0.6);
+}
+
+.finalPlatform::after {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: 15px;
+  width: 30px;
+  height: 30px;
+  background: radial-gradient(circle, #ff69b4, #ff1493);
+  border-radius: 50% 10% 50% 50%;
+  animation: finalFlowerGlow 2s ease-in-out infinite;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+@keyframes finalPlatformFloat {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+}
+
+@keyframes finalFlowerGlow {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    box-shadow: 0 0 10px rgba(255, 105, 180, 0.6);
+  }
+  50% {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 0 20px rgba(255, 105, 180, 0.9);
+  }
+}
+
+/* Responsividad para la meta */
+@media (max-width: 768px) {
+  .finishArch {
+    width: 160px;
+    height: 100px;
+  }
+  
+  .archText {
+    font-size: 1.2rem;
+  }
+  
+  .finishFlag {
+    font-size: 1.5rem;
+  }
+  
+  .confetti {
+    font-size: 1rem;
+  }
+  
+  .finalPlatform {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .finishArch {
+    width: 120px;
+    height: 80px;
+  }
+  
+  .archText {
+    font-size: 1rem;
+  }
+  
+  .finishFlag {
+    font-size: 1.2rem;
+  }
+  
+  .confetti {
+    font-size: 0.8rem;
+  }
+  
+  .finalPlatform {
+    font-size: 1.2rem;
+  }
+}

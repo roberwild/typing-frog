@@ -1,0 +1,353 @@
+/* Estilos para la pantalla de Game Over */
+
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.content {
+  background: linear-gradient(135deg, #1f2937, #374151);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  border: 2px solid #4ade80;
+  text-align: center;
+  color: white;
+}
+
+.header {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.title {
+  font-size: 2.2rem;
+  margin: 0 0 15px 0;
+  color: #4ade80;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  animation: titleGlow 2s ease-in-out infinite;
+}
+
+.message {
+  font-size: 1.1rem;
+  color: #d1d5db;
+  margin: 0 0 15px 0;
+  line-height: 1.5;
+}
+
+/* Calificación de rendimiento */
+.performanceRating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.performanceEmoji {
+  font-size: 2rem;
+  animation: emojiFloat 2s ease-in-out infinite;
+}
+
+.performanceText {
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-shadow: 0 0 10px currentColor;
+  animation: textPulse 2s ease-in-out infinite;
+}
+
+/* Sección de medalla */
+.medalSection {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* Información del nivel */
+.levelInfo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  background: rgba(74, 222, 128, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
+.levelIcon {
+  font-size: 1.5rem;
+}
+
+.levelName {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #4ade80;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.stats {
+  margin-bottom: 30px;
+}
+
+.stats h2 {
+  color: #4ade80;
+  margin: 0 0 20px 0;
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.statCard {
+  background: linear-gradient(135deg, rgba(75, 85, 99, 0.4), rgba(55, 65, 81, 0.4));
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(156, 163, 175, 0.2);
+  text-align: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.statCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  border-color: #4ade80;
+}
+
+.statIcon {
+  font-size: 2rem;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.statValue {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #f3f4f6;
+  margin-bottom: 5px;
+  font-family: 'Courier New', monospace;
+}
+
+.statLabel {
+  font-size: 0.9rem;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+/* Resumen detallado */
+.summary {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(156, 163, 175, 0.2);
+}
+
+.summaryItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(156, 163, 175, 0.1);
+}
+
+.summaryItem:last-child {
+  border-bottom: none;
+}
+
+.summaryLabel {
+  color: #9ca3af;
+  font-size: 0.9rem;
+}
+
+.summaryValue {
+  color: #f3f4f6;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.restartButton,
+.menuButton {
+  padding: 15px 25px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.restartButton {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+}
+
+.restartButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+  background: linear-gradient(135deg, #16a34a, #15803d);
+}
+
+.menuButton {
+  background: linear-gradient(135deg, #6b7280, #4b5563);
+  color: white;
+  box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
+}
+
+.menuButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(107, 114, 128, 0.4);
+  background: linear-gradient(135deg, #4b5563, #374151);
+}
+
+.restartButton:active,
+.menuButton:active {
+  transform: translateY(0);
+}
+
+/* Animaciones */
+@keyframes titleGlow {
+  0%, 100% {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(74, 222, 128, 0.8), 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+}
+
+@keyframes emojiFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(5deg);
+  }
+}
+
+@keyframes textPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  
+  .content {
+    padding: 30px 20px;
+  }
+  
+  .medal {
+    font-size: 3rem;
+  }
+  
+  .title {
+    font-size: 1.8rem;
+  }
+  
+  .message {
+    font-size: 1rem;
+  }
+  
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  
+  .statCard {
+    padding: 15px;
+  }
+  
+  .statIcon {
+    font-size: 1.5rem;
+  }
+  
+  .statValue {
+    font-size: 1.4rem;
+  }
+  
+  .summary {
+    padding: 15px;
+  }
+  
+  .restartButton,
+  .menuButton {
+    font-size: 1rem;
+    padding: 12px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .statCard {
+    padding: 12px;
+  }
+  
+  .title {
+    font-size: 1.8rem;
+  }
+  
+  .performanceText {
+    font-size: 1.1rem;
+  }
+  
+  .levelInfo {
+    padding: 8px 15px;
+  }
+}

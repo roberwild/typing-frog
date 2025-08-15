@@ -1,0 +1,553 @@
+/* === HUD AAA GAMING INTERFACE === */
+
+.hud {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  display: grid;
+  grid-template-columns: auto 1fr auto 1fr auto;
+  gap: 30px;
+  align-items: center;
+  
+  /* Glassmorphism AAA */
+  background: 
+    linear-gradient(135deg, 
+      rgba(15, 15, 35, 0.95) 0%, 
+      rgba(25, 35, 45, 0.92) 50%, 
+      rgba(15, 25, 40, 0.95) 100%),
+    radial-gradient(circle at 20% 20%, rgba(34, 197, 94, 0.1), transparent 70%),
+    radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.08), transparent 70%);
+  
+  backdrop-filter: blur(20px) saturate(1.8);
+  border-radius: 24px;
+  padding: 16px 35px;
+  
+  /* Bordes gaming con brillo */
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  box-shadow: 
+    /* Sombra principal */
+    0 12px 40px rgba(0, 0, 0, 0.4),
+    /* Borde interior brillante */
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+    /* Resplandor gaming */
+    0 0 40px rgba(34, 197, 94, 0.2),
+    0 0 80px rgba(34, 197, 94, 0.1);
+  
+  /* Borde animado */
+  position: relative;
+  z-index: 15;
+  
+  /* Tipografía gaming */
+  font-family: 'Segoe UI', 'Roboto', 'Inter', system-ui, sans-serif;
+  font-weight: 600;
+  color: #f8fafc;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Borde animado gaming */
+.hud::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 26px;
+  background: linear-gradient(45deg, 
+    #22c55e 0%, 
+    #3b82f6 25%, 
+    #8b5cf6 50%, 
+    #06b6d4 75%, 
+    #22c55e 100%);
+  z-index: -1;
+  animation: borderGlow 3s ease-in-out infinite;
+}
+
+.levelContainer,
+.livesContainer,
+.timeContainer,
+.progressContainer,
+.statsContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.label {
+  font-weight: bold;
+  font-size: 0.85rem;
+  color: #d1d5db;
+  white-space: nowrap;
+}
+
+/* Nivel y Medalla */
+.levelContainer {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.levelInfo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.levelIcon {
+  font-size: 1.2rem;
+  filter: drop-shadow(0 0 5px rgba(74, 222, 128, 0.5));
+}
+
+.levelLabel {
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #4ade80;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.medalContainer {
+  margin-top: 2px;
+}
+
+.medalIcon {
+  font-size: 1.5rem;
+  animation: medalFloat 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+}
+
+/* Vidas mejoradas */
+.lives {
+  display: flex;
+  gap: 8px;
+}
+
+.heartContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.heart {
+  width: 20px;
+  height: 18px;
+  position: relative;
+  background: linear-gradient(135deg, #ff1744, #e91e63);
+  transform: rotate(-45deg);
+  transition: all 0.3s ease;
+  z-index: 2;
+  border-radius: 50% 0 50% 50%;
+}
+
+.heart::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 18px;
+  background: linear-gradient(135deg, #ff1744, #e91e63);
+  border-radius: 50%;
+  top: -9px;
+  left: 0;
+}
+
+.heart::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 18px;
+  background: linear-gradient(135deg, #ff1744, #e91e63);
+  border-radius: 50%;
+  top: 0;
+  right: -9px;
+}
+
+.heartContainer.active .heart {
+  opacity: 1;
+  transform: rotate(-45deg) scale(1);
+  filter: drop-shadow(0 0 8px rgba(255, 20, 147, 0.6));
+  animation: heartbeat 2s ease-in-out infinite;
+}
+
+.heartContainer.inactive .heart {
+  opacity: 0.2;
+  transform: rotate(-45deg) scale(0.7);
+  filter: grayscale(1);
+}
+
+.heartContainer.inactive .heart::before,
+.heartContainer.inactive .heart::after {
+  background: linear-gradient(135deg, #666, #888);
+}
+
+.heartGlow {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background: radial-gradient(circle, rgba(255, 20, 147, 0.3), transparent);
+  border-radius: 50%;
+  animation: heartGlow 2s ease-in-out infinite;
+  z-index: 1;
+}
+
+/* === BARRAS AAA GAMING === */
+.timeBarContainer {
+  position: relative;
+  width: 160px;
+  height: 24px;
+  background: 
+    linear-gradient(145deg, rgba(0, 0, 0, 0.6), rgba(20, 20, 30, 0.8)),
+    radial-gradient(ellipse at 20% 50%, rgba(34, 197, 94, 0.1), transparent);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+    0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.timeBarContainer::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(90deg, 
+    rgba(34, 197, 94, 0.5), 
+    rgba(59, 130, 246, 0.3), 
+    rgba(34, 197, 94, 0.5));
+  border-radius: 14px;
+  z-index: -1;
+}
+
+.timeBar {
+  height: 100%;
+  border-radius: 10px;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  background: 
+    linear-gradient(90deg, 
+      #22c55e 0%, 
+      #16a34a 50%, 
+      #15803d 100%),
+    linear-gradient(90deg, 
+      rgba(255, 255, 255, 0.2), 
+      transparent 50%, 
+      rgba(255, 255, 255, 0.1));
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+    0 0 15px rgba(34, 197, 94, 0.4);
+}
+
+/* Efectos de brillo en la barra */
+.timeBar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.4), 
+    transparent);
+  animation: barShine 2s ease-in-out infinite;
+}
+
+.timeBarGlow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: barGlow 2s ease-in-out infinite;
+}
+
+.timeText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  z-index: 3;
+}
+
+/* Barra de progreso AAA */
+.progressBarContainer {
+  position: relative;
+  width: 140px;
+  height: 20px;
+  background: 
+    linear-gradient(145deg, rgba(0, 0, 0, 0.6), rgba(0, 20, 30, 0.8)),
+    radial-gradient(ellipse at 20% 50%, rgba(59, 130, 246, 0.1), transparent);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+    0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.progressBarContainer::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(90deg, 
+    rgba(59, 130, 246, 0.5), 
+    rgba(96, 165, 250, 0.4), 
+    rgba(59, 130, 246, 0.5));
+  border-radius: 12px;
+  z-index: -1;
+}
+
+.progressBar {
+  height: 100%;
+  background: 
+    linear-gradient(90deg, 
+      #3b82f6 0%, 
+      #60a5fa 50%, 
+      #2563eb 100%),
+    linear-gradient(90deg, 
+      rgba(255, 255, 255, 0.25), 
+      transparent 50%, 
+      rgba(255, 255, 255, 0.15));
+  border-radius: 8px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+    0 0 15px rgba(59, 130, 246, 0.5);
+}
+
+.progressBar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.5), 
+    transparent);
+  animation: barShine 2.5s ease-in-out infinite;
+}
+
+.progressBarGlow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: barGlow 1.5s ease-in-out infinite;
+}
+
+.progressText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Courier New', monospace;
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  z-index: 3;
+}
+
+/* Estadísticas adicionales */
+.statsContainer {
+  flex-direction: column;
+  gap: 4px;
+}
+
+.statItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.statIcon {
+  font-size: 1rem;
+}
+
+.statValue {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #f59e0b;
+}
+
+.statLabel {
+  font-size: 0.7rem;
+  color: #9ca3af;
+}
+
+/* === ANIMACIONES AAA GAMING === */
+
+/* Borde gaming animado */
+@keyframes borderGlow {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+/* Brillo de barras AAA */
+@keyframes barShine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes medalFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
+  }
+  50% {
+    transform: translateY(-5px) scale(1.05);
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+  }
+}
+
+@keyframes heartbeat {
+  0%, 100% {
+    transform: rotate(-45deg) scale(1);
+    filter: drop-shadow(0 0 8px rgba(255, 20, 147, 0.6));
+  }
+  50% {
+    transform: rotate(-45deg) scale(1.15);
+    filter: drop-shadow(0 0 15px rgba(255, 20, 147, 0.9));
+  }
+}
+
+@keyframes heartGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.3);
+  }
+}
+
+@keyframes barGlow {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes urgentPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .hud {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    padding: 10px 15px;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto auto;
+    gap: 8px;
+    text-align: center;
+  }
+  
+  .levelContainer,
+  .livesContainer,
+  .timeContainer,
+  .progressContainer,
+  .statsContainer {
+    justify-content: center;
+  }
+  
+  .label {
+    font-size: 0.8rem;
+  }
+  
+  .timeBarContainer {
+    width: 100px;
+    height: 16px;
+  }
+  
+  .progressBarContainer {
+    width: 80px;
+    height: 14px;
+  }
+  
+  .timeText,
+  .progressText {
+    font-size: 0.65rem;
+  }
+  
+  .heart {
+    font-size: 1.2rem;
+  }
+  
+  .medalIcon {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hud {
+    padding: 8px 12px;
+    gap: 6px;
+  }
+  
+  .timeBarContainer {
+    width: 80px;
+    height: 14px;
+  }
+  
+  .progressBarContainer {
+    width: 60px;
+    height: 12px;
+  }
+  
+  .heart {
+    font-size: 1rem;
+  }
+  
+  .label {
+    font-size: 0.75rem;
+  }
+}

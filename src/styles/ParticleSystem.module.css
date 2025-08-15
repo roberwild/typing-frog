@@ -1,0 +1,371 @@
+/* Sistema de Partículas para efectos visuales */
+
+.particleContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, opacity;
+  font-size: 1rem;
+}
+
+/* === TIPOS DE PARTÍCULAS === */
+
+/* Salpicaduras de agua */
+.splash {
+  animation: splashPhysics 2s ease-out forwards;
+  filter: drop-shadow(0 1px 3px rgba(0, 100, 200, 0.3));
+}
+
+/* Chispas y destellos */
+.sparkle {
+  animation: sparklePhysics 2.5s ease-out forwards;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 0, 0.8));
+}
+
+/* Ondas en el agua */
+.ripple {
+  animation: rippleExpand 1.5s ease-out forwards;
+  color: rgba(100, 150, 255, 0.6);
+}
+
+/* Burbujas */
+.bubble {
+  animation: bubbleFloat 3s ease-out forwards;
+  filter: drop-shadow(0 1px 2px rgba(0, 150, 255, 0.2));
+}
+
+/* Rayos eléctricos */
+.lightning {
+  animation: lightningFlash 1s ease-out forwards;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 0, 1));
+  color: #ffff00;
+}
+
+/* === ANIMACIONES FÍSICAS === */
+
+@keyframes splashPhysics {
+  0% {
+    transform: scale(0.3) rotate(0deg);
+    opacity: 1;
+  }
+  30% {
+    transform: scale(1) rotate(45deg);
+    opacity: 0.9;
+  }
+  70% {
+    transform: scale(0.8) rotate(90deg);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(0.3) rotate(180deg);
+    opacity: 0;
+  }
+}
+
+@keyframes sparklePhysics {
+  0% {
+    transform: scale(0.2) rotate(0deg);
+    opacity: 1;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 0, 1));
+  }
+  25% {
+    transform: scale(1.2) rotate(90deg);
+    opacity: 1;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 0, 1));
+  }
+  50% {
+    transform: scale(1) rotate(180deg);
+    opacity: 0.8;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 0, 0.8));
+  }
+  75% {
+    transform: scale(0.6) rotate(270deg);
+    opacity: 0.4;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 0, 0.5));
+  }
+  100% {
+    transform: scale(0.1) rotate(360deg);
+    opacity: 0;
+    filter: drop-shadow(0 0 2px rgba(255, 255, 0, 0.2));
+  }
+}
+
+@keyframes rippleExpand {
+  0% {
+    transform: scale(0.1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(2);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+@keyframes bubbleFloat {
+  0% {
+    transform: scale(0.3) translateY(0px);
+    opacity: 0.8;
+  }
+  25% {
+    transform: scale(1) translateY(-20px);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.1) translateY(-40px);
+    opacity: 0.4;
+  }
+  75% {
+    transform: scale(0.9) translateY(-60px);
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(0.5) translateY(-80px);
+    opacity: 0;
+  }
+}
+
+@keyframes lightningFlash {
+  0% {
+    transform: scale(0.5) rotate(0deg);
+    opacity: 1;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 0, 1));
+  }
+  10% {
+    transform: scale(1.5) rotate(45deg);
+    opacity: 1;
+    filter: drop-shadow(0 0 20px rgba(255, 255, 0, 1));
+  }
+  20% {
+    transform: scale(0.8) rotate(90deg);
+    opacity: 0.8;
+    filter: drop-shadow(0 0 15px rgba(255, 255, 0, 0.8));
+  }
+  30% {
+    transform: scale(1.2) rotate(135deg);
+    opacity: 1;
+    filter: drop-shadow(0 0 25px rgba(255, 255, 0, 1));
+  }
+  40% {
+    transform: scale(0.6) rotate(180deg);
+    opacity: 0.6;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 0, 0.6));
+  }
+  60% {
+    transform: scale(1) rotate(225deg);
+    opacity: 0.8;
+    filter: drop-shadow(0 0 15px rgba(255, 255, 0, 0.8));
+  }
+  80% {
+    transform: scale(0.4) rotate(270deg);
+    opacity: 0.3;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 0, 0.3));
+  }
+  100% {
+    transform: scale(0.1) rotate(360deg);
+    opacity: 0;
+    filter: drop-shadow(0 0 2px rgba(255, 255, 0, 0.1));
+  }
+}
+
+/* === EFECTOS ESPECIALES POR TIPO === */
+
+/* Efectos de splash con variaciones */
+.splash:nth-child(odd) {
+  animation-duration: 1.8s;
+  animation-timing-function: ease-in-out;
+}
+
+.splash:nth-child(even) {
+  animation-duration: 2.2s;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Efectos de sparkle con parpadeo */
+.sparkle:nth-child(3n) {
+  animation: sparklePhysics 2.5s ease-out forwards, sparkleTwinkle 0.3s ease-in-out infinite;
+}
+
+.sparkle:nth-child(3n+1) {
+  animation-delay: 0.1s;
+}
+
+.sparkle:nth-child(3n+2) {
+  animation-delay: 0.2s;
+}
+
+@keyframes sparkleTwinkle {
+  0%, 100% { 
+    filter: drop-shadow(0 0 5px rgba(255, 255, 0, 0.8));
+  }
+  50% { 
+    filter: drop-shadow(0 0 15px rgba(255, 255, 0, 1));
+  }
+}
+
+/* Efectos de ripple con ondas múltiples */
+.ripple:nth-child(odd) {
+  animation-delay: 0s;
+}
+
+.ripple:nth-child(even) {
+  animation-delay: 0.3s;
+  animation-duration: 2s;
+}
+
+/* Efectos de burbuja con flotación realista */
+.bubble:nth-child(odd) {
+  animation: bubbleFloat 3s ease-out forwards, bubbleWobble 1s ease-in-out infinite;
+}
+
+@keyframes bubbleWobble {
+  0%, 100% { 
+    transform: translateX(0px);
+  }
+  50% { 
+    transform: translateX(5px);
+  }
+}
+
+/* Efectos de lightning con descargas múltiples */
+.lightning:nth-child(2n) {
+  animation: lightningFlash 1s ease-out forwards, lightningZap 0.1s ease-in-out infinite;
+}
+
+@keyframes lightningZap {
+  0%, 90%, 100% { 
+    opacity: 1;
+  }
+  95% { 
+    opacity: 0.3;
+  }
+}
+
+/* === COMBINACIONES ESPECIALES === */
+
+/* Combinación de splash + ripple */
+.splash.combo-ripple {
+  animation: splashPhysics 2s ease-out forwards, rippleCombo 0.5s ease-out;
+}
+
+@keyframes rippleCombo {
+  0% {
+    box-shadow: 0 0 0 0 rgba(100, 150, 255, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 0 20px rgba(100, 150, 255, 0);
+  }
+}
+
+/* Combinación de lightning + sparkle */
+.lightning.combo-sparkle {
+  animation: lightningFlash 1s ease-out forwards, sparkleCombo 2s ease-out;
+}
+
+@keyframes sparkleCombo {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 0, 1)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(255, 255, 0, 1)) drop-shadow(0 0 30px rgba(255, 255, 255, 0.8));
+  }
+}
+
+/* === EFECTOS DE PERFORMANCE === */
+
+/* Optimización para móviles */
+@media (max-width: 768px) {
+  .particle {
+    will-change: transform;
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+  
+  .splash,
+  .sparkle,
+  .bubble,
+  .lightning {
+    animation-duration: 1.5s; /* Acelerar en móviles */
+  }
+  
+  .ripple {
+    animation-duration: 1s;
+  }
+}
+
+/* Reducir efectos en dispositivos con batería baja */
+@media (prefers-reduced-motion: reduce) {
+  .particle {
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+  }
+  
+  .sparkleTwinkle,
+  .bubbleWobble,
+  .lightningZap {
+    animation: none;
+  }
+}
+
+/* === EFECTOS AVANZADOS === */
+
+/* Partículas con trail/estela */
+.splash.trail::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  opacity: 0.3;
+  animation: trailEffect 0.5s ease-out;
+}
+
+@keyframes trailEffect {
+  0% {
+    transform: scale(1.2);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+
+/* Partículas con glow pulsante */
+.sparkle.glow {
+  animation: sparklePhysics 2.5s ease-out forwards, glowPulse 0.5s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 5px rgba(255, 255, 0, 0.8));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(255, 255, 0, 1)) drop-shadow(0 0 25px rgba(255, 255, 255, 0.5));
+  }
+}
+
+/* Responsividad adicional */
+@media (max-width: 480px) {
+  .particle {
+    font-size: 0.8rem;
+  }
+  
+  .particleContainer {
+    overflow: hidden; /* Asegurar que no haya scroll en móviles */
+  }
+}

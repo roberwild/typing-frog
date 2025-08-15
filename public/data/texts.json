@@ -1,0 +1,44 @@
+{
+  "principiante": [
+    "La rana salta feliz entre las hojas verdes del lago. El sol brilla en el agua cristalina mientras los peces nadan cerca de la orilla.",
+    "En el jardín hay muchas flores de colores. Las abejas vuelan de una flor a otra recogiendo el dulce nectar dorado.",
+    "El gato juega con una pelota roja en el patio. Sus patas se mueven rapido mientras persigue el juguete favorito.",
+    "Los niños corren por el parque bajo el cielo azul. Las nubes blancas flotan suavemente sobre las copas de los arboles.",
+    "La mariposa vuela entre las rosas del jardin. Sus alas brillan con colores hermosos bajo los rayos del sol de la tarde."
+  ],
+  "intermedio": [
+    "La tecnología ha cambiado nuestras vidas de manera extraordinaria. Los teléfonos móviles nos conectan instantáneamente con personas de todo el mundo, facilitando la comunicación global.",
+    "El océano alberga una increíble diversidad de especies marinas. Desde pequeños peces tropicales hasta enormes ballenas azules, cada criatura tiene un papel fundamental en el ecosistema.",
+    "La música clásica transmite emociones profundas a través de melodías complejas. Los compositores como Mozart y Beethoven crearon obras maestras que perduran a través de los siglos.",
+    "El café es una de las bebidas más populares del planeta. Su aroma característico y sabor único lo convierten en el acompañante perfecto para comenzar cada mañana.",
+    "Los libros abren puertas hacia mundos imaginarios llenos de aventuras. La lectura desarrolla nuestra imaginación y nos permite vivir experiencias únicas desde la comodidad del hogar."
+  ],
+  "avanzado": [
+    "La inteligencia artificial representa uno de los avances tecnológicos más significativos del siglo XXI. Su capacidad para procesar información, reconocer patrones complejos y automatizar tareas ha revolucionado industrias enteras, desde la medicina hasta la manufactura. Sin embargo, también plantea importantes dilemas éticos sobre el futuro del trabajo humano.",
+    "El cambio climático constituye el desafío ambiental más apremiante de nuestra era. Las emisiones de gases de efecto invernadero han alterado los patrones meteorológicos globales, provocando fenómenos extremos como sequías prolongadas, inundaciones devastadoras y el derretimiento acelerado de los glaciares polares, amenazando la biodiversidad y los ecosistemas.",
+    "La filosofía griega antigua sentó las bases del pensamiento occidental moderno. Filósofos como Sócrates, Platón y Aristóteles desarrollaron conceptos fundamentales sobre la ética, la política y la metafísica que continúan influyendo en el debate intelectual contemporáneo, demostrando la atemporalidad de sus reflexiones sobre la condición humana.",
+    "La exploración espacial ha expandido exponencialmente nuestra comprensión del universo. Misiones como el telescopio Hubble y los rovers marcianos han revelado la existencia de exoplanetas potencialmente habitables, mientras que proyectos ambiciosos como la colonización de Marte prometen establecer la presencia humana permanente más allá de la Tierra.",
+    "La globalización económica ha interconectado los mercados mundiales de manera sin precedentes. El comercio internacional, las inversiones transfronterizas y las cadenas de suministro globales han creado una economía interdependiente que, aunque ha generado prosperidad, también ha aumentado la vulnerabilidad ante crisis sistémicas y ha exacerbado las desigualdades socioeconómicas."
+  ],
+  "beginner": [
+    "La rana salta feliz entre las hojas verdes del lago. El sol brilla en el agua cristalina mientras los peces nadan cerca de la orilla.",
+    "En el jardín hay muchas flores de colores. Las abejas vuelan de una flor a otra recogiendo el dulce nectar dorado.",
+    "El gato juega con una pelota roja en el patio. Sus patas se mueven rapido mientras persigue el juguete favorito.",
+    "Los niños corren por el parque bajo el cielo azul. Las nubes blancas flotan suavemente sobre las copas de los arboles.",
+    "La mariposa vuela entre las rosas del jardin. Sus alas brillan con colores hermosos bajo los rayos del sol de la tarde."
+  ],
+  "intermediate": [
+    "La tecnología ha cambiado nuestras vidas de manera extraordinaria. Los teléfonos móviles nos conectan instantáneamente con personas de todo el mundo, facilitando la comunicación global.",
+    "El océano alberga una increíble diversidad de especies marinas. Desde pequeños peces tropicales hasta enormes ballenas azules, cada criatura tiene un papel fundamental en el ecosistema.",
+    "La música clásica transmite emociones profundas a través de melodías complejas. Los compositores como Mozart y Beethoven crearon obras maestras que perduran a través de los siglos.",
+    "El café es una de las bebidas más populares del planeta. Su aroma característico y sabor único lo convierten en el acompañante perfecto para comenzar cada mañana.",
+    "Los libros abren puertas hacia mundos imaginarios llenos de aventuras. La lectura desarrolla nuestra imaginación y nos permite vivir experiencias únicas desde la comodidad del hogar."
+  ],
+  "advanced": [
+    "La inteligencia artificial representa uno de los avances tecnológicos más significativos del siglo XXI. Su capacidad para procesar información, reconocer patrones complejos y automatizar tareas ha revolucionado industrias enteras, desde la medicina hasta la manufactura. Sin embargo, también plantea importantes dilemas éticos sobre el futuro del trabajo humano.",
+    "El cambio climático constituye el desafío ambiental más apremiante de nuestra era. Las emisiones de gases de efecto invernadero han alterado los patrones meteorológicos globales, provocando fenómenos extremos como sequías prolongadas, inundaciones devastadoras y el derretimiento acelerado de los glaciares polares, amenazando la biodiversidad y los ecosistemas.",
+    "La filosofía griega antigua sentó las bases del pensamiento occidental moderno. Filósofos como Sócrates, Platón y Aristóteles desarrollaron conceptos fundamentales sobre la ética, la política y la metafísica que continúan influyendo en el debate intelectual contemporáneo, demostrando la atemporalidad de sus reflexiones sobre la condición humana.",
+    "La exploración espacial ha expandido exponencialmente nuestra comprensión del universo. Misiones como el telescopio Hubble y los rovers marcianos han revelado la existencia de exoplanetas potencialmente habitables, mientras que proyectos ambiciosos como la colonización de Marte prometen establecer la presencia humana permanente más allá de la Tierra.",
+    "La globalización económica ha interconectado los mercados mundiales de manera sin precedentes. El comercio internacional, las inversiones transfronterizas y las cadenas de suministro globales han creado una economía interdependiente que, aunque ha generado prosperidad, también ha aumentado la vulnerabilidad ante crisis sistémicas y ha exacerbado las desigualdades socioeconómicas."
+  ]
+}
