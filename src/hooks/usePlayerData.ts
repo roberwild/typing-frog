@@ -198,9 +198,9 @@ export const usePlayerData = () => {
 
     switch (metric) {
       case 'all_levels_completed':
-        return stats.principiante.gamesCompleted > 0 && 
-               stats.intermedio.gamesCompleted > 0 && 
-               stats.avanzado.gamesCompleted > 0;
+        return stats.principianteStats.gamesCompleted > 0 && 
+               stats.intermedioStats.gamesCompleted > 0 && 
+               stats.avanzadoStats.gamesCompleted > 0;
       case 'first_time':
         return stats.sessions.length === 1;
       default:
@@ -282,7 +282,7 @@ export const usePlayerData = () => {
     });
 
     return newlyUnlocked;
-  }, [calculatePlayerLevel, checkSingleGameCondition, checkTotalGamesCondition]);
+  }, [calculatePlayerLevel]);
 
 
 
