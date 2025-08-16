@@ -202,7 +202,7 @@ export const usePlayerData = () => {
                stats.intermedioStats.gamesCompleted > 0 && 
                stats.avanzadoStats.gamesCompleted > 0;
       case 'first_time':
-        return stats.sessions.length === 1;
+        return stats.totalGamesPlayed === 1;
       default:
         return false;
     }
