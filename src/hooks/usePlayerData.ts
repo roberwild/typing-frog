@@ -192,6 +192,43 @@ export const usePlayerData = () => {
 
 
 
+  // Verificar condición de una sola partida
+  const checkSingleGameCondition = useCallback((achievement: Achievement, session: GameSession): boolean => {
+    const { metric, value, operator } = achievement.condition;
+    let sessionValue: number = 0;
+
+    switch (metric) {
+      case 'wpm':
+        sessionValue = session.wpm;
+        break;
+      case 'accuracy':
+        sessionValue = session.accuracy;
+        break;
+      case 'first_completion':
+        return session.completed;
+    }
+
+    return evaluateCondition(sessionValue, value, operator);
+  }, []);
+
+  // Verificar condición de totales
+  const checkTotalGamesCondition = useCallback((achievement: Achievement, stats: PlayerStats): boolean => {
+    const { metric, value, operator } = achievement.condition;
+    let totalValue: number = 0;
+
+    switch (metric) {
+      case 'games_completed':
+        totalValue = stats.totalGamesCompleted;
+        break;
+      case 'gold_medals':
+        // TODO: Implementar contador de medallas
+        totalValue = 0;
+        break;
+    }
+
+    return evaluateCondition(totalValue, value, operator);
+  }, []);
+
   // Verificar condiciones especiales
   const checkSpecialCondition = (achievement: Achievement, session: GameSession, stats: PlayerStats): boolean => {
     const { metric } = achievement.condition;
@@ -282,7 +319,7 @@ export const usePlayerData = () => {
     });
 
     return newlyUnlocked;
-  }, [calculatePlayerLevel]);
+  }, [calculatePlayerLevel, checkSingleGameCondition, checkTotalGamesCondition]);
 
 
 
