@@ -178,6 +178,51 @@ export const usePlayerData = () => {
     });
   }, [playerStats]);
 
+  // Funciones helper para verificar condiciones
+  const evaluateCondition = (actual: number, target: number, operator: string): boolean => {
+    switch (operator) {
+      case '>=': return actual >= target;
+      case '>': return actual > target;
+      case '<=': return actual <= target;
+      default: return false;
+    }
+  };
+
+
+
+
+
+  // Verificar condiciones especiales
+  const checkSpecialCondition = (achievement: Achievement, session: GameSession, stats: PlayerStats): boolean => {
+    const { metric } = achievement.condition;
+
+    switch (metric) {
+      case 'all_levels_completed':
+        return stats.principiante.gamesCompleted > 0 && 
+               stats.intermedio.gamesCompleted > 0 && 
+               stats.avanzado.gamesCompleted > 0;
+      case 'first_time':
+        return stats.sessions.length === 1;
+      default:
+        return false;
+    }
+  };
+
+  // Calcular nivel del jugador basado en XP
+  const calculatePlayerLevel = useCallback((experience: number): number => {
+    let level = 1;
+    let xpRequired = 1000;
+    let totalXP = 0;
+
+    while (totalXP + xpRequired <= experience) {
+      totalXP += xpRequired;
+      level++;
+      xpRequired = calculateXPForNextLevel(level);
+    }
+
+    return level;
+  }, []);
+
   // Verificar y desbloquear logros
   const checkAchievements = useCallback((session: GameSession, updatedStats: PlayerStats) => {
     const newlyUnlocked: Achievement[] = [];
@@ -239,42 +284,9 @@ export const usePlayerData = () => {
     return newlyUnlocked;
   }, [calculatePlayerLevel, checkSingleGameCondition, checkTotalGamesCondition]);
 
-  // Verificar condición de una sola partida
-  const checkSingleGameCondition = useCallback((achievement: Achievement, session: GameSession): boolean => {
-    const { metric, value, operator } = achievement.condition;
-    let sessionValue: number = 0;
 
-    switch (metric) {
-      case 'wpm':
-        sessionValue = session.wpm;
-        break;
-      case 'accuracy':
-        sessionValue = session.accuracy;
-        break;
-      case 'first_completion':
-        return session.completed;
-    }
 
-    return evaluateCondition(sessionValue, value, operator);
-  }, []);
 
-  // Verificar condición de totales
-  const checkTotalGamesCondition = useCallback((achievement: Achievement, stats: PlayerStats): boolean => {
-    const { metric, value, operator } = achievement.condition;
-    let totalValue: number = 0;
-
-    switch (metric) {
-      case 'games_completed':
-        totalValue = stats.totalGamesCompleted;
-        break;
-      case 'gold_medals':
-        // TODO: Implementar contador de medallas
-        totalValue = 0;
-        break;
-    }
-
-    return evaluateCondition(totalValue, value, operator);
-  }, []);
 
   // Verificar condiciones especiales
   const checkSpecialCondition = (achievement: Achievement, session: GameSession, stats: PlayerStats): boolean => {
