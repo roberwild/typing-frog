@@ -288,59 +288,6 @@ export const usePlayerData = () => {
 
 
 
-  // Verificar condiciones especiales
-  const checkSpecialCondition = (achievement: Achievement, session: GameSession, stats: PlayerStats): boolean => {
-    const { metric } = achievement.condition;
-
-    switch (metric) {
-      case 'all_levels_completed':
-        return stats.principianteStats.gamesCompleted > 0 && 
-               stats.intermedioStats.gamesCompleted > 0 && 
-               stats.avanzadoStats.gamesCompleted > 0;
-      
-      case 'night_games':
-        // TODO: Implementar contador por tiempo del día
-        return false;
-      
-      case 'morning_games':
-        // TODO: Implementar contador por tiempo del día
-        return false;
-      
-      case 'perfect_beginner_game':
-        return session.level === 'principiante' && session.errors === 0 && session.completed;
-      
-      default:
-        return false;
-    }
-  };
-
-  // Evaluar operadores de condiciones
-  const evaluateCondition = (actual: number, target: number, operator: string): boolean => {
-    switch (operator) {
-      case '=': return actual === target;
-      case '>': return actual > target;
-      case '>=': return actual >= target;
-      case '<': return actual < target;
-      case '<=': return actual <= target;
-      default: return false;
-    }
-  };
-
-  // Calcular nivel del jugador basado en XP
-  const calculatePlayerLevel = useCallback((experience: number): number => {
-    let level = 1;
-    let xpRequired = 1000;
-    let totalXP = 0;
-
-    while (totalXP + xpRequired <= experience) {
-      totalXP += xpRequired;
-      level++;
-      xpRequired = calculateXPForNextLevel(level);
-    }
-
-    return level;
-  }, []);
-
   // Registrar una nueva sesión de juego
   const recordGameSession = useCallback((session: GameSession) => {
     if (!playerStats) return [];
