@@ -85,7 +85,7 @@ export const useTexts = () => {
 
     if (!levelTexts || levelTexts.length === 0) {
       console.error(`No hay textos disponibles para el nivel: ${level}`);
-      return FALLBACK_TEXTS[mappedLevel] || FALLBACK_TEXTS.principiante[0];
+      return FALLBACK_TEXTS[mappedLevel]?.[0] || FALLBACK_TEXTS.principiante[0];
     }
 
     const randomIndex = Math.floor(Math.random() * levelTexts.length);
