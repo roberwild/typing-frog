@@ -240,7 +240,7 @@ export const usePlayerData = () => {
   }, [calculatePlayerLevel, checkSingleGameCondition, checkTotalGamesCondition]);
 
   // Verificar condición de una sola partida
-  const checkSingleGameCondition = (achievement: Achievement, session: GameSession): boolean => {
+  const checkSingleGameCondition = useCallback((achievement: Achievement, session: GameSession): boolean => {
     const { metric, value, operator } = achievement.condition;
     let sessionValue: number = 0;
 
@@ -256,10 +256,10 @@ export const usePlayerData = () => {
     }
 
     return evaluateCondition(sessionValue, value, operator);
-  };
+  }, []);
 
   // Verificar condición de totales
-  const checkTotalGamesCondition = (achievement: Achievement, stats: PlayerStats): boolean => {
+  const checkTotalGamesCondition = useCallback((achievement: Achievement, stats: PlayerStats): boolean => {
     const { metric, value, operator } = achievement.condition;
     let totalValue: number = 0;
 
@@ -274,7 +274,7 @@ export const usePlayerData = () => {
     }
 
     return evaluateCondition(totalValue, value, operator);
-  };
+  }, []);
 
   // Verificar condiciones especiales
   const checkSpecialCondition = (achievement: Achievement, session: GameSession, stats: PlayerStats): boolean => {
@@ -315,7 +315,7 @@ export const usePlayerData = () => {
   };
 
   // Calcular nivel del jugador basado en XP
-  const calculatePlayerLevel = (experience: number): number => {
+  const calculatePlayerLevel = useCallback((experience: number): number => {
     let level = 1;
     let xpRequired = 1000;
     let totalXP = 0;
@@ -327,7 +327,7 @@ export const usePlayerData = () => {
     }
 
     return level;
-  };
+  }, []);
 
   // Registrar una nueva sesión de juego
   const recordGameSession = useCallback((session: GameSession) => {

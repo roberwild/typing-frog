@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useGame } from '@/hooks/useGame';
 import { StartScreen } from './StartScreen';
 import { TextDisplay } from './TextDisplay';
@@ -102,6 +102,17 @@ export const Game: React.FC = () => {
     // Simplificado - los efectos visuales ahora están en el CSS de la rana
     // console.log('Frog state changed to:', frogState);
   }, [frogState]);
+
+  // Función para determinar la razón del game over
+  const getGameOverReason = useCallback((): 'time' | 'lives' | 'completed' => {
+    if (stats.timeRemaining <= 0) {
+      return 'time';
+    }
+    if (stats.lives <= 0) {
+      return 'lives';
+    }
+    return 'completed';
+  }, [stats.timeRemaining, stats.lives]);
 
   // Efectos especiales al finalizar el juego
   useEffect(() => {
@@ -232,15 +243,7 @@ export const Game: React.FC = () => {
     resetGame();
   };
 
-  const getGameOverReason = (): 'time' | 'lives' | 'completed' => {
-    if (stats.timeRemaining <= 0) {
-      return 'time';
-    }
-    if (stats.lives <= 0) {
-      return 'lives';
-    }
-    return 'completed';
-  };
+
 
   // Calcular progreso del juego y velocidad para parallax
   const gameProgress = characters.length > 0 ? (stats.currentPosition / characters.length) * 100 : 0;
