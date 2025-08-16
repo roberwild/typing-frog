@@ -178,7 +178,7 @@ export const useGame = (config: Partial<GameConfig> = {}) => {
         accuracy,
         wpm,
         completed,
-        medalEarned: medal,
+        medalEarned: medal || undefined,
         achievementsUnlocked: []
       };
       

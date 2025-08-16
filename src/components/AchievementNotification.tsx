@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Achievement } from '@/types/game';
 import styles from '@/styles/AchievementNotification.module.css';
 
@@ -18,6 +18,14 @@ export const AchievementNotification: React.FC<AchievementNotificationProps> = (
   const [isVisible, setIsVisible] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
 
+  const handleClose = useCallback(() => {
+    setIsExiting(true);
+    setTimeout(() => {
+      setIsVisible(false);
+      onClose();
+    }, 300);
+  }, [onClose]);
+
   useEffect(() => {
     if (achievement) {
       setIsVisible(true);
@@ -30,15 +38,7 @@ export const AchievementNotification: React.FC<AchievementNotificationProps> = (
 
       return () => clearTimeout(timer);
     }
-  }, [achievement, duration]);
-
-  const handleClose = () => {
-    setIsExiting(true);
-    setTimeout(() => {
-      setIsVisible(false);
-      onClose();
-    }, 300);
-  };
+  }, [achievement, duration, handleClose]);
 
   if (!achievement || !isVisible) return null;
 

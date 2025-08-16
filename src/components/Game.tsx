@@ -117,7 +117,7 @@ export const Game: React.FC = () => {
         console.log('🎉 Game completed!');
       }
     }
-  }, [gameState, playThunderSound]);
+  }, [gameState, playThunderSound, getGameOverReason]);
 
   // Cleanup al desmontar
   useEffect(() => {

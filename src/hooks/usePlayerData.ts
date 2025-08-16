@@ -237,7 +237,7 @@ export const usePlayerData = () => {
     });
 
     return newlyUnlocked;
-  }, []);
+  }, [calculatePlayerLevel, checkSingleGameCondition, checkTotalGamesCondition]);
 
   // Verificar condición de una sola partida
   const checkSingleGameCondition = (achievement: Achievement, session: GameSession): boolean => {
