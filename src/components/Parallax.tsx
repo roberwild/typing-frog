@@ -22,8 +22,8 @@ export const Parallax: React.FC<ParallaxProps> = ({
 }) => {
   // Calcular posición de parallax basado en progreso del juego - AAA Dynamic Movement
   // El fondo se mueve hacia la izquierda cada vez que la rana salta
-  const baseOffset = gameProgress * 50; // Movimiento más pronunciado del fondo
-  const speedMultiplier = Math.max(0.5, Math.min(2, speed / 30)); // Normalizar PPM a multiplicador
+  const baseOffset = Math.min(gameProgress * 20, 800); // Movimiento limitado para evitar que el lago desaparezca
+  const speedMultiplier = Math.max(0.3, Math.min(1.2, speed / 20)); // Multiplicador más conservador
 
   // Estados para valores aleatorios - Solución a hidratación
   const [randomPositions, setRandomPositions] = useState({

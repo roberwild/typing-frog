@@ -7,7 +7,6 @@ import { usePlayerData } from './usePlayerData';
 
 const DEFAULT_CONFIG: GameConfig = {
   maxLives: 3,
-  gameTime: 60,
   defaultLevel: 'principiante',
 };
 
@@ -52,16 +51,13 @@ export const useGame = (config: Partial<GameConfig> = {}) => {
   // Estadísticas del juego
   const [stats, setStats] = useState<GameStats>({
     lives: gameConfig.maxLives,
-    timeRemaining: gameConfig.gameTime,
     currentPosition: 0,
     correctChars: 0,
     errors: 0,
     medal: null,
   });
 
-  // Referencias para el temporizador
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const gameStartTimeRef = useRef<number>(0);
+
   
   // Referencias para tracking de sesión - Fase 5
   const sessionStartTimeRef = useRef<number>(0);
@@ -109,7 +105,6 @@ export const useGame = (config: Partial<GameConfig> = {}) => {
     resetToIdle(); // Resetear rana a estado idle
     setStats({
       lives: gameConfig.maxLives,
-      timeRemaining: gameConfig.gameTime,
       currentPosition: 0,
       correctChars: 0,
       errors: 0,
@@ -123,32 +118,13 @@ export const useGame = (config: Partial<GameConfig> = {}) => {
     // Iniciar tracking de sesión - Fase 5
     sessionStartTimeRef.current = Date.now();
     sessionIdRef.current = `game_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    
-    // Iniciar temporizador
-    gameStartTimeRef.current = Date.now();
-    timerRef.current = setInterval(() => {
-      setStats(prev => {
-        const newTime = prev.timeRemaining - 1;
-        if (newTime <= 0) {
-          // Tiempo agotado - activar muerte de la rana
-          triggerDeath();
-          playDeathSound();
-          setTimeout(() => setGameState('gameOver'), 1000); // Esperar animación
-          return { ...prev, timeRemaining: 0 };
-        }
-        return { ...prev, timeRemaining: newTime };
-      });
-    }, 1000);
+
     
     console.log('✅ Juego iniciado exitosamente');
-  }, [currentLevel, textsLoading, gameConfig.maxLives, gameConfig.gameTime, initializeText, resetToIdle, triggerDeath, playDeathSound]);
+  }, [currentLevel, textsLoading, gameConfig.maxLives, initializeText, resetToIdle, triggerDeath, playDeathSound]);
 
   // Terminar juego
   const endGame = useCallback(() => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
     
     // Calcular medalla según vidas restantes
     let medal: 'gold' | 'silver' | 'bronze' | null = null;
@@ -263,12 +239,9 @@ export const useGame = (config: Partial<GameConfig> = {}) => {
     });
   }, [gameState, characters, endGame, triggerJump, triggerShock, triggerDeath, playJumpSound, playErrorSound, playDeathSound, playVictorySound]);
 
-  // Limpiar temporizador, rana y sonidos al desmontar
+  // Limpiar rana y sonidos al desmontar
   useEffect(() => {
     return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
       cleanupFrog();
       cleanupSounds();
     };
@@ -277,31 +250,26 @@ export const useGame = (config: Partial<GameConfig> = {}) => {
   // Finalizar juego cuando se agote el tiempo o las vidas
   useEffect(() => {
     if (gameState === 'playing') {
-      if (stats.timeRemaining <= 0 || stats.lives <= 0) {
+      if (stats.lives <= 0) {
         endGame();
       }
     }
-  }, [stats.timeRemaining, stats.lives, gameState, endGame]);
+  }, [stats.lives, gameState, endGame]);
 
   // Resetear juego a estado inicial
   const resetGame = useCallback(() => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
     setGameState('idle');
     resetToIdle(); // Resetear rana
     setCurrentText('');
     setCharacters([]);
     setStats({
       lives: gameConfig.maxLives,
-      timeRemaining: gameConfig.gameTime,
       currentPosition: 0,
       correctChars: 0,
       errors: 0,
       medal: null,
     });
-  }, [gameConfig.maxLives, gameConfig.gameTime, resetToIdle]);
+  }, [gameConfig.maxLives, resetToIdle]);
 
   // Actualizar tiempo del día - Fase 5
   const updateTimeOfDay = useCallback((timeOfDay: string) => {

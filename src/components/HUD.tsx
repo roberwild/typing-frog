@@ -6,31 +6,14 @@ interface HUDProps {
   stats: GameStats;
   totalCharacters: number;
   currentLevel: DifficultyLevel;
-  maxTime: number;
 }
 
 export const HUD: React.FC<HUDProps> = ({ 
   stats, 
   totalCharacters, 
-  currentLevel,
-  maxTime 
+  currentLevel
 }) => {
-  const formatTime = (seconds: number): string => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
 
-  const getTimeBarWidth = (): number => {
-    return Math.max(0, (stats.timeRemaining / maxTime) * 100);
-  };
-
-  const getTimeBarColor = (): string => {
-    const percentage = stats.timeRemaining / maxTime;
-    if (percentage <= 0.16) return '#ef4444'; // Crítico - rojo
-    if (percentage <= 0.5) return '#f59e0b';  // Advertencia - amarillo
-    return '#22c55e'; // Normal - verde
-  };
 
   const getProgressPercentage = (): number => {
     if (totalCharacters === 0) return 0;
@@ -100,24 +83,7 @@ export const HUD: React.FC<HUDProps> = ({
         </div>
       </div>
 
-      {/* Barra de tiempo */}
-      <div className={styles.timeContainer}>
-        <span className={styles.label}>Tiempo</span>
-        <div className={styles.timeBarContainer}>
-          <div 
-            className={styles.timeBar}
-            style={{
-              width: `${getTimeBarWidth()}%`,
-              backgroundColor: getTimeBarColor()
-            }}
-          >
-            <div className={styles.timeBarGlow}></div>
-          </div>
-          <span className={styles.timeText}>
-            {formatTime(stats.timeRemaining)}
-          </span>
-        </div>
-      </div>
+
 
       {/* Progreso visual */}
       <div className={styles.progressContainer}>

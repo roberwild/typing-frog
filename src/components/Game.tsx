@@ -104,28 +104,25 @@ export const Game: React.FC = () => {
   }, [frogState]);
 
   // Función para determinar la razón del game over
-  const getGameOverReason = useCallback((): 'time' | 'lives' | 'completed' => {
-    if (stats.timeRemaining <= 0) {
-      return 'time';
-    }
+  const getGameOverReason = useCallback((): 'lives' | 'completed' => {
     if (stats.lives <= 0) {
       return 'lives';
     }
     return 'completed';
-  }, [stats.timeRemaining, stats.lives]);
+  }, [stats.lives]);
 
   // Efectos especiales al finalizar el juego
   useEffect(() => {
     if (gameState === 'gameOver') {
       const reason = getGameOverReason();
       
-      if (reason === 'time') {
-        // Efecto de trueno si se acabó el tiempo
-        playThunderSound();
-        setTimeOfDay('night'); // Cambiar a noche dramáticamente
-      } else if (reason === 'completed') {
+      if (reason === 'completed') {
         // Efectos de celebración manejados por CSS
         console.log('🎉 Game completed!');
+      } else {
+        // Sin vidas - efecto dramático
+        playThunderSound();
+        setTimeOfDay('night'); // Cambiar a noche dramáticamente
       }
     }
   }, [gameState, playThunderSound, getGameOverReason]);
@@ -247,9 +244,7 @@ export const Game: React.FC = () => {
 
   // Calcular progreso del juego y velocidad para parallax
   const gameProgress = characters.length > 0 ? (stats.currentPosition / characters.length) * 100 : 0;
-  const currentWPM = stats.correctChars > 0 && stats.timeRemaining < 60 
-    ? Math.round((stats.correctChars / 5) / ((60 - stats.timeRemaining) / 60))
-    : 0;
+  const currentWPM = Math.min(30, Math.max(5, stats.correctChars * 0.5)); // Velocidad controlada y limitada
   const isNearEnd = gameProgress > 85; // Para mostrar la meta
 
   return (
@@ -335,7 +330,6 @@ export const Game: React.FC = () => {
             stats={stats} 
             totalCharacters={characters.length}
             currentLevel={currentLevel}
-            maxTime={60}
           />
           <TextDisplay characters={characters} currentPosition={stats.currentPosition} />
           

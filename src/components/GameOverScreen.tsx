@@ -8,7 +8,7 @@ interface GameOverScreenProps {
   currentLevel: DifficultyLevel;
   onRestart: () => void;
   onReturnToMenu: () => void;
-  reason: 'time' | 'lives' | 'completed';
+  reason: 'lives' | 'completed';
   totalCharacters: number;
 }
 
@@ -22,16 +22,12 @@ export const GameOverScreen: React.FC<GameOverScreenProps> = ({
 }) => {
   const getTitle = (): string => {
     if (reason === 'completed') return '¡Texto Completado!';
-    if (reason === 'time') return '¡Se Acabó el Tiempo!';
     return '¡Sin Vidas!';
   };
 
   const getMessage = (): string => {
     if (reason === 'completed') {
       return '🎉 ¡Felicidades! Has completado el texto exitosamente.';
-    }
-    if (reason === 'time') {
-      return '⚡ El tiempo se agotó, pero lo hiciste muy bien.';
     }
     return '💔 Te quedaste sin vidas, ¡pero puedes intentarlo de nuevo!';
   };
@@ -62,9 +58,7 @@ export const GameOverScreen: React.FC<GameOverScreenProps> = ({
     ? Math.round((stats.correctChars / totalCharacters) * 100)
     : 0;
 
-  const wpm = stats.correctChars > 0 
-    ? Math.round((stats.correctChars / 5) / ((60 - stats.timeRemaining) / 60))
-    : 0;
+  const wpm = 0; // WPM no se calcula sin limitación de tiempo
 
   const getPerformanceRating = (): { emoji: string; text: string; color: string } => {
     if (reason === 'completed' && stats.medal === 'gold') {
@@ -135,19 +129,13 @@ export const GameOverScreen: React.FC<GameOverScreenProps> = ({
             <div className={styles.statCard}>
               <div className={styles.statIcon}>📊</div>
               <div className={styles.statValue}>{completionRate}%</div>
-              <div className={styles.statLabel}>Completado</div>
-            </div>
-            
-            <div className={styles.statCard}>
-              <div className={styles.statIcon}>⚡</div>
-              <div className={styles.statValue}>{wpm}</div>
-              <div className={styles.statLabel}>PPM</div>
+              <div className={styles.statLabel}>Progreso</div>
             </div>
             
             <div className={styles.statCard}>
               <div className={styles.statIcon}>✅</div>
-              <div className={styles.statValue}>{stats.correctChars}</div>
-              <div className={styles.statLabel}>Correctos</div>
+              <div className={styles.statValue}>{stats.correctChars}/{totalCharacters}</div>
+              <div className={styles.statLabel}>Caracteres</div>
             </div>
             
             <div className={styles.statCard}>
@@ -155,28 +143,13 @@ export const GameOverScreen: React.FC<GameOverScreenProps> = ({
               <div className={styles.statValue}>{stats.errors}</div>
               <div className={styles.statLabel}>Errores</div>
             </div>
-            
-            <div className={styles.statCard}>
-              <div className={styles.statIcon}>💝</div>
-              <div className={styles.statValue}>{stats.lives}</div>
-              <div className={styles.statLabel}>Vidas</div>
-            </div>
           </div>
 
-          {/* Resumen detallado */}
-          <div className={styles.summary}>
-            <div className={styles.summaryItem}>
-              <span className={styles.summaryLabel}>Caracteres totales:</span>
-              <span className={styles.summaryValue}>{totalCharacters}</span>
-            </div>
-            <div className={styles.summaryItem}>
-              <span className={styles.summaryLabel}>Tiempo utilizado:</span>
-              <span className={styles.summaryValue}>{60 - stats.timeRemaining}s</span>
-            </div>
-            <div className={styles.summaryItem}>
-              <span className={styles.summaryLabel}>Velocidad promedio:</span>
-              <span className={styles.summaryValue}>{wpm} PPM</span>
-            </div>
+          {/* Información adicional compacta */}
+          <div className={styles.additionalInfo}>
+            <span className={styles.infoItem}>
+              💝 {stats.lives} vidas restantes
+            </span>
           </div>
         </div>
 

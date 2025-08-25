@@ -6,7 +6,6 @@ export type GameState = 'idle' | 'playing' | 'gameOver';
 
 export interface GameStats {
   lives: number;
-  timeRemaining: number;
   currentPosition: number;
   correctChars: number;
   errors: number;
@@ -30,7 +29,6 @@ export interface CharacterStatus {
 
 export interface GameConfig {
   maxLives: number;
-  gameTime: number; // en segundos
   defaultLevel: DifficultyLevel;
 }
 

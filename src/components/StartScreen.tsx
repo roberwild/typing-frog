@@ -51,13 +51,7 @@ export const StartScreen: React.FC<StartScreenProps> = ({
         </div>
 
         <div className={styles.instructions}>
-          <h2>¿Cómo jugar?</h2>
-          <ul>
-            <li>Teclea el texto que aparece en la parte inferior</li>
-            <li>La rana saltará con cada letra correcta</li>
-            <li>Tienes 3 vidas y 60 segundos</li>
-            <li>¡Evita los errores o perderás una vida!</li>
-          </ul>
+          <p>🎯 Teclea correctamente • 🐸 La rana salta con cada acierto • ❤️ Tienes 3 vidas</p>
         </div>
 
         <div className={styles.levelSelection}>

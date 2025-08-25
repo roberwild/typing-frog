@@ -488,7 +488,7 @@
 }
 
 .water {
-  width: 300%; /* Mucho más ancho para continuidad */
+  width: 400%; /* Más ancho para asegurar continuidad */
   height: 100%;
   background: linear-gradient(
     to bottom,
@@ -497,7 +497,7 @@
   );
   position: relative;
   overflow: hidden;
-  left: -100%; /* Extender hacia la izquierda */
+  left: -150%; /* Extender más hacia la izquierda para compensar el movimiento */
 }
 
 .waterWaves {
